@@ -18,7 +18,6 @@ const AddDialog = () => {
    const handleChange = (e) => {
     const { name, value } = e.target;
     setCode(value);
-    console.log(code)
 };
     return (
         <div>

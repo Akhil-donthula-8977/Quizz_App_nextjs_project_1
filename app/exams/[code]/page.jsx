@@ -10,8 +10,10 @@ import { studentExamAttempt } from '@/actions/studentAction';
 // student attempt
 export default async function page({ params }) {
   const session = await getServerSession(options)
+console.log(params.code)
   const [data, checkSubmitted] = await Promise.all([getExamData(params.code), studentExamAttempt(params.code, session?.user?._id)])
-  if (checkSubmitted.submittedQuizzes.length > 0) {
+  console.log("ccc",checkSubmitted,data)
+  if (checkSubmitted?.submittedQuizzes?.length > 0) {
     return (<>
       <p>already submitted</p>
     </>)

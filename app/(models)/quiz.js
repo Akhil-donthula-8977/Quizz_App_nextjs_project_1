@@ -19,6 +19,9 @@ const QuizzSchema=new mongoose.Schema({
     endTime: {
         type:String
     },
+    noOfMarks:{
+        type:Number
+    }
 
 },{
     timestamps: true 

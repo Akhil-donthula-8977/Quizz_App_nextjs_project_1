@@ -14,6 +14,7 @@ const QuizzCard = async (props) => {
             <div className='flex flex-col '>
                 <div className='flex flex-row items-center'>
                     <h3 className='text-red-500 ml-1'>Deadline:</h3><h3 className='ml-1 text-sm'> {dateFormatter(props.data.deadline.toString())}</h3>
+                    <h3 >{props.data._id}</h3>
                 </div>
                 <div className='flex flex-row items-center'>
                     <h3 className='text-red-500 ml-1'>start time: </h3><h3 className='ml-1 text-sm '> {props.data.startTime}</h3>

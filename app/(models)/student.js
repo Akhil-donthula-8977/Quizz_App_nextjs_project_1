@@ -16,8 +16,8 @@ const studentSchema=mongoose.Schema({
     },
     incharges:[{type:mongoose.Schema.Types.ObjectId,ref:"Teacher"}],
     quizzes:[{type:mongoose.Schema.Types.ObjectId,ref:"Quizz"}],
-    submittedQuizzes:[{type:mongoose.Schema.Types.ObjectId,ref:"Quizz"}]
-    
+    submittedQuizzes:[{type:mongoose.Schema.Types.ObjectId,ref:"Quizz"}],
+    results:[{type:mongoose.Schema.Types.ObjectId}] 
 
 })
 

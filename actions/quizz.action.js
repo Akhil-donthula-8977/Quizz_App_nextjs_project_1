@@ -13,7 +13,11 @@ export const handleError = (error) => {
   }
 export async function fetchExamsSchedules(sessionId){
  await  connectToDB();
-  const data=await Student.findById(sessionId).populate("quizzes").exec();
+ const data = await Student.findById(sessionId)
+ .populate("quizzes")
+ .populate("submittedQuizzes")
+ .exec();
+
   console.log("dataa",data);
    return quizSchedules;
 }

@@ -20,7 +20,7 @@ const QuestionOptions = ({ quizcode,questions, activeQuestion }) => {
     const [selectedAnswer, setSelectedAnswer] = useState({})
   const router=useRouter()
   const {data:session,status}=useSession()
-  console.log(session)
+
   const handleSubmit=async function(e){
     const res = await submitQuizz(quizcode, session?.user?._id);
     if(res){
@@ -54,6 +54,7 @@ const ExamComponent = ({ data }) => {
     const [activeQuestion, setActiveQuestion] = useState(0);
     const handle = useFullScreenHandle();
     const params=useParams();
+    console.log("dataaaaaaaaa",data)
     if (start) {
         return (
             <div>
