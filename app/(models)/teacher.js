@@ -21,4 +21,4 @@ const TeacherSchema=new mongoose.Schema({
 
 })
 
-export const Teacher= mongoose.models.Teacher|| mongoose.model("Teacher",TeacherSchema)
+export const Teacher= mongoose.models.Teacher|| mongoose.model("Teacher",TeacherSchema,"Teacher")

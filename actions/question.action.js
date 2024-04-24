@@ -21,7 +21,7 @@ export  async function selectOptionForQuestion(quizzId,quesId,option,studentId){
             option:option
          })
        }
-       console.log(res)
+       //console.log(res)
        return JSON.parse(JSON.stringify(res));
     }
     catch(e){

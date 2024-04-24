@@ -69,6 +69,15 @@ export async function getQuizzesByTeacherId(id){
     }
 }
 
+export async function getSubmittedQuizzes(id){
+  try{
+      
+  }
+  catch(e){
+    console.log(e);
+  }
+}
+
 
 export async function addQuestionToQuizz(data,id){
   try{

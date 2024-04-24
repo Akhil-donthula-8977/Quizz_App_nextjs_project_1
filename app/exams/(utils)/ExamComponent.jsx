@@ -1,6 +1,7 @@
 "use client"
 import { Button } from '@/components/ui/button';
 import React, { useEffect, useState } from 'react';
+import { emailQueue } from "../../api/queues/result"
 import { FullScreen, useFullScreenHandle } from "react-full-screen";
 import ExamOption from './ExamOption';
 import {
@@ -14,6 +15,7 @@ import {
 import { useParams, useRouter } from 'next/navigation';
 import { submitQuizz } from '@/actions/studentAction';
 import { useSession } from 'next-auth/react';
+import { getResultData } from '@/actions/results.action';
 
 const arr = ["optionA", "optionB", "optionC", "optionD"];
 const QuestionOptions = ({ quizcode,questions, activeQuestion }) => {
@@ -22,9 +24,12 @@ const QuestionOptions = ({ quizcode,questions, activeQuestion }) => {
   const {data:session,status}=useSession()
 
   const handleSubmit=async function(e){
-    const res = await submitQuizz(quizcode, session?.user?._id);
-    if(res){
-        router.replace("/exams");
+   const res = await submitQuizz(quizcode, session?.user?._id);
+   if(res){
+      //  router.query.submitted = "True"
+      //await emailQueue.enqueue(quizcode,{delay:"1h"})
+     await getResultData(session?.user?._id,quizcode)
+     router.replace(`/exams`);
     }
   }
     return (
@@ -54,7 +59,6 @@ const ExamComponent = ({ data }) => {
     const [activeQuestion, setActiveQuestion] = useState(0);
     const handle = useFullScreenHandle();
     const params=useParams();
-    console.log("dataaaaaaaaa",data)
     if (start) {
         return (
             <div>
