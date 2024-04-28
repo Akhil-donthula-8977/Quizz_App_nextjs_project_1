@@ -36,7 +36,6 @@ export async function submitQuizz(quizzId, studentId) {
             },
             { new: true } // to return the updated document
         );
-        console.log(res);
         return res;
     }
     catch (e) {

@@ -15,8 +15,7 @@ import {
 import { useParams, useRouter } from 'next/navigation';
 import { submitQuizz } from '@/actions/studentAction';
 import { useSession } from 'next-auth/react';
-import { getResultData } from '@/actions/results.action';
-
+import { getResultData, setResultForQuizz } from '@/actions/results.action';
 const arr = ["optionA", "optionB", "optionC", "optionD"];
 const QuestionOptions = ({ quizcode,questions, activeQuestion }) => {
     const [selectedAnswer, setSelectedAnswer] = useState({})
@@ -24,11 +23,11 @@ const QuestionOptions = ({ quizcode,questions, activeQuestion }) => {
   const {data:session,status}=useSession()
 
   const handleSubmit=async function(e){
-   const res = await submitQuizz(quizcode, session?.user?._id);
+   const res =true
+   //await submitQuizz(quizcode, session?.user?._id);
    if(res){
-      //  router.query.submitted = "True"
-      //await emailQueue.enqueue(quizcode,{delay:"1h"})
-     await getResultData(session?.user?._id,quizcode)
+      //await submitQuizz(quizcode,session?.user?._id)
+     await setResultForQuizz(session?.user?._id,quizcode)
      router.replace(`/exams`);
     }
   }

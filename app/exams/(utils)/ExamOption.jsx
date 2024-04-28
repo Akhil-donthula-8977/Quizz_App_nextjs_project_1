@@ -7,10 +7,7 @@ const ExamOption = ({ questions, selectedAnswer, setSelectedAnswer,activeQuestio
     const params=useParams()
     const handleClick =async (e) => {
       e.preventDefault();
-      console.log(e.target.value)
-      console.log(selectedAnswer)
       const res=await selectOptionForQuestion(params.code,questions[activeQuestion]._id,e.target.value,session?.user?._id)
-     console.log(res)  
       if(res){
            setSelectedAnswer(prev=>({
             ...prev,

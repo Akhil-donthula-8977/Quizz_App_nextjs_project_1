@@ -4,7 +4,6 @@ import { quizData ,quizSchedules} from "@/lib/fakeData";
 import { unstable_cache } from "next/cache";
 import { Quizz } from "@/app/(models)/quiz";
 import { Question } from "@/app/(models)/question";
-import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 import { Student } from "@/app/(models)/student";
 export const handleError = (error) => {
