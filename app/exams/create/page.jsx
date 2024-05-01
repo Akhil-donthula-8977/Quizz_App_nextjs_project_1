@@ -11,6 +11,7 @@ const Page = () => {
     startTime: '',
     endTime: '',
     noOfQuestions: 0,
+    noOfMarks:0,
   });
   const router=useRouter();
   const { data: session, status } = useSession()
@@ -27,9 +28,8 @@ const Page = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+  
     const res=await addQuizz({...formData,incharge:session?.user?._id,})
-    console.log(res)
     if(res){
       return router.back()
     }
@@ -113,6 +113,21 @@ const Page = () => {
               type="number"
               placeholder="Enter Number of Questions"
               value={formData.noOfQuestions}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="mb-4">
+            <label htmlFor="noOfMarks" className="block text-gray-700 text-sm font-bold mb-2">
+              Marks 
+            </label>
+            <input
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              id="noOfMarks"
+              name="noOfMarks"
+              type="number"
+              placeholder="Enter Number of Marks"
+              value={formData.noOfMarks}
               onChange={handleChange}
             />
           </div>

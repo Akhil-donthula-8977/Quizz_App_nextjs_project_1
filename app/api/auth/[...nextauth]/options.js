@@ -11,7 +11,6 @@ export const options = {
       credentials: {
       },
       async authorize(credentials){
-       console.log(credentials)
         try{
                let flag="";
                await connectToDB();
@@ -39,7 +38,6 @@ export const options = {
   callbacks:{
   
          async jwt({token,user}){
-          console.log("user jwt",user)
           if(user) {
             token.role=user.role
             token._id=user._id
@@ -48,7 +46,6 @@ export const options = {
       },
       //client side
       async session({session,token}){
-          console.log("session user",session?.user)
           if(session?.user){
             session.user.role=token.role
              session.user._id=token._id

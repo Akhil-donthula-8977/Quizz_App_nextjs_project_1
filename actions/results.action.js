@@ -24,17 +24,18 @@ export async function setResultForQuizz(userId, quizzCode) {
         }).populate({
           path: 'quizzId',
         }).exec()
-        // console.log(answers);
     let res;
     let marks = 0;
     for (let i in answers) {
       if (answersConstant[answers[i].questionId.correctoption] == answers[i].option) marks++;
     }
     if (!check) {
-       res = await Result.create({
+      const totalmarks=answers[0].quizzId.noOfMarks ? answers[0].quizzId.noOfMarks : 10
+      console.log(totalmarks) 
+      res = await Result.create({
         quizId: quizzCode,
         StudentId:userId,
-        totalMarks: 10,
+        totalMarks:totalmarks,
         gainedMarks:marks
       })
     }
@@ -54,12 +55,22 @@ export async function getAllResultData(userId) {
   try {
     await connectToDB();
     console.log(userId)
-    const resultData=await Result.find({ StudentId:userId})
-    .sort('date')
+    const resultData = await Result.find({ StudentId: userId })
     .populate({
-      path: 'quizId',
-      ref: "Quizz"
-    }).exec()
+        path: 'quizId',
+        model: 'Quizz',
+        populate: {
+            path: 'incharge',
+            model: 'Teacher',
+            select: 'name email'
+        }
+    })
+    .sort({ 'quizId.deadline': 1 }) // Sort by deadline in ascending order
+    .exec();
+
+  
+  console.log(resultData); // Log the populated resultData to inspect the populated fields
+  
     console.log(resultData)
     return JSON.parse(JSON.stringify(resultData));
 

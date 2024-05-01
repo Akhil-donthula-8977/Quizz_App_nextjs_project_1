@@ -12,11 +12,12 @@ const WorkSans = Work_Sans({ subsets: ["latin"] });
 const SignIn = () => {
     const router = useRouter();
     const { data: session, status } = useSession()
-    // if (status === "authenticated") {
-    //         router.push("/")
-    //   }
+
     
-    const [formData, setFormData] = useState({});
+    const [formData, setFormData] = useState({
+        email:"",
+        password:"",
+    });
     const [selectedRole, setSelectedRole] = useState(roles[0])
     const handleInputChange = (e) => {
         const { name, value } = e.target;

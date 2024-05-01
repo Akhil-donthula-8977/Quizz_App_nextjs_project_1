@@ -24,8 +24,7 @@ export async function fetchExamsSchedules(sessionId){
 export async function fetchExamData({id}){
     return quizData
 }
-export const getExamData = unstable_cache(
-  async (id) => {
+export const getExamData = async (id) => {
     try{
          await connectToDB();
          const data=await Promise.all([
@@ -39,9 +38,7 @@ export const getExamData = unstable_cache(
     catch(e){
           handleError(e);
     }
-  },
-  ['StudentExam']
-);
+  }
 
 export async function addQuizz(data){
     try{
@@ -92,3 +89,5 @@ export async function addQuestionToQuizz(data,id){
     handleError(e);
   }
 }
+
+

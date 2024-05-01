@@ -6,7 +6,7 @@ const layout =async ({children}) => {
   const session=await getServerSession()
   const headersList = headers();
   const fullUrl = headersList.get('referer') || "";
-  console.log(fullUrl)
+  
   return (
     <>
      {session?.user && <NavBar></NavBar>}

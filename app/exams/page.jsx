@@ -20,6 +20,9 @@ const page = async () => {
   }
   if(session?.user?.role=="TEACHER"){
     const data=await getQuizzesByTeacherId(session?.user?._id);
+    if(data?.length==0 || !data){
+      return <p>not founnd data</p>
+    }
       return(
         <section className='md:flex flex-col mt-5 justify-center  '>
        <Link className='w-full flex flex-row justify-center' href="/exams/create"> <Button className="p-5 w-1/3  bg-black text-white border-black border-[1px] 

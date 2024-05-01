@@ -5,6 +5,7 @@ import { options } from "./api/auth/[...nextauth]/options";
 import NavBar from "./(components)/NavBar";
 import { redirect } from "next/navigation";
 import { Inter, Work_Sans } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] });
 const WorkSans = Work_Sans({ subsets: ["latin"] });
 
@@ -15,14 +16,15 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
   const session = await getServerSession(options)
-  console.log("layout", session)
   return (
     <html lang="en">
       <body className={inter.className}>
         <AuthProvider>
+        <Toaster className="bg-black text-black opacity-1" />
           <main className="">
             {children}
           </main>
+       
         </AuthProvider>
       </body>
     </html>

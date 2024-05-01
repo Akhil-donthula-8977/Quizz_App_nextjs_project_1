@@ -7,12 +7,14 @@ import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import ExamComponent from '../(utils)/ExamComponent';
 import { studentExamAttempt } from '@/actions/studentAction';
+import { unstable_noStore as noStore } from 'next/cache';
 // student attempt
 export default async function page({ params }) {
+  noStore();
   const session = await getServerSession(options)
-console.log(params.code)
+  
   const [data, checkSubmitted] = await Promise.all([getExamData(params.code), studentExamAttempt(params.code, session?.user?._id)])
-  //console.log("ccc",checkSubmitted,data)
+  console.log(data)
   if (checkSubmitted?.submittedQuizzes?.length > 0) {
     return (<>
       <p>already submitted</p>

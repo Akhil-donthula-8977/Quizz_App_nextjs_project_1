@@ -11,39 +11,69 @@ import { unstable_noStore as noStore } from "next/cache";
 import { CircularProgressbar } from "react-circular-progressbar";
 import ResultDataCard from "./(utils)/ResultDataCard";
 import { useRouter } from "next/navigation";
+import { RotatingLines } from 'react-loader-spinner'
+
+const Loader=()=>{
+  return(
+    <div className="w-full h-full flex justify-center items-center">
+      <RotatingLines
+    visible={true}
+    height="96"
+    width="96"
+    color="black"
+    strokeWidth="2"
+    animationDuration="0.75"
+    ariaLabel="rotating-lines-loading"
+    wrapperStyle={{}}
+    wrapperClass=""
+  />
+    </div>
+  )
+}
 
 const Page = () => {
-  const router=useRouter()
+  const router = useRouter()
   const [filter, setFilter] = useState("");
   const [debouncedFilter] = useDebounce(filter, 500);
   const [resultData, setResultData] = useState(undefined);
   const params = useParams();
   const { data: session, status } = useSession();
-
+  const [loading, setLoading] = useState(true);
   noStore();
 
   useEffect(() => {
-    console.log(session)
+
     const fetchData = async (id) => {
       try {
         console.log(id);
         const dataa = await getAllResultData(id);
         setResultData(dataa);
+        console.log(dataa)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
+    setLoading(true)
     if (status === "loading") {
-      return; 
+      return;
     }
     if (session?.user?._id) {
       fetchData(session?.user?._id);
+      setLoading(false)
     }
   }, [session, status]);
 
   const value = 0.26;
+  if (loading) {
+    return <Loader></Loader>
+    
+  }
+  if(resultData?.length==0){
+    return <p>No Items are found</p>
+  }
 
   return (
+
     <section className="flex flex-col items-center overflow-hidden justify-center">
       <div className="flex">
         <input
@@ -56,17 +86,30 @@ const Page = () => {
           Search
         </Button>
       </div>
-
       <div className="flex flex-col justify-center items-center md:max-w-[800px]">
         {resultData ? (
           resultData.map((e) => (
-            <ResultDataCard key={e.id} data={e}></ResultDataCard>
+            <ResultDataCard key={e._id} data={e}></ResultDataCard>
           ))
         ) : (
-          <p>null</p>
+          <RotatingLines
+        visible={true}
+        height="96"
+        width="96"
+        color="black"
+        strokeWidth="2"
+        animationDuration="0.75"
+        ariaLabel="rotating-lines-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+      />
         )}
+
+
+
       </div>
     </section>
+
   );
 };
 

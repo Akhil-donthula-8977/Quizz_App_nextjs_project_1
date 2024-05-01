@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { dateFormatter } from '@/lib/utils/forms'
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 const ResultDataCard = (props) => {
-    const value = (props.data.gainedMarks / props.data.totalMarks)
+    const value = (props.data.gainedMarks / props.data.totalMarks).toFixed(2)
     const [color,setColor]=useState("");
     useEffect(()=>{
     if(value<30){
@@ -24,7 +24,7 @@ const ResultDataCard = (props) => {
                 <div className='flex flex-col items-start'>
                     <h1 className='md:text-2xl sm:text-xl text-md font-bold '>{props.data.quizId.quizzName}</h1>
                     <div className='flex justify-between '>
-                        <h3 className='m-1'>{props.data.incharge}</h3>
+                        <h3 className='m-1'><b>incharge</b>:{props.data.quizId.incharge.name}</h3>
                         <h3>{props.data.time}</h3>
                     </div>
                     <div className='flex flex-col justify-center items-center '>
