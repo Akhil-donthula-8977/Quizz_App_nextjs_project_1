@@ -18,7 +18,6 @@ export async function studentExamAttempt(quizzId,studentId) {
         const data = await Student.findOne(
             { _id: studentId, submittedQuizzes: { $in: [quizzId] } }
         ).select({ submittedQuizzes: 1 })
-        console.log("check student attempt",data);
         return data;
     }
     catch (e) {

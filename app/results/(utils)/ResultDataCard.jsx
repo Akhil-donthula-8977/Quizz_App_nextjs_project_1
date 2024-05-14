@@ -6,18 +6,16 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 const ResultDataCard = (props) => {
     const value = (props.data.gainedMarks / props.data.totalMarks).toFixed(2)
     const [color,setColor]=useState("");
-    useEffect(()=>{
-    if(value<30){
-       setColor("red")
-    }
-    else if(value<70){
-        setColor("yellow")
-    }
-    else{
-        setColor("blue")
-    }
-
-    },[props])
+    useEffect(() => {
+        let newColor = "red"; // Default color
+        if (value>0.30 && value < 0.70) {
+            newColor = "blue";
+        }
+        if (value >= 0.70) {
+            newColor = "green";
+        }
+        setColor(newColor);
+    }, [value]);
     return (
         <div className='border md:w-[650px] sm:w-[350px] w-[320px] m-1 mt-3  p-3 bg-gray-100  border-gray-300 rounded-[10px]'>
             <div className='flex flex-row justify-between items-center '>
@@ -30,7 +28,7 @@ const ResultDataCard = (props) => {
                     <div className='flex flex-col justify-center items-center '>
                         <div className='flex'><h3 className='text-red-500 ml-1 sm:text-[16px] text-[12px]'>Deadline: </h3><h3 className='ml-1 text-[12px] sm:text-[16px]'> {dateFormatter(props.data.quizId.deadline)}</h3></div>
                     </div>
-                    <Link href={`/results/${props.data._id}`} className='m-1'> <Button variant="outline" className="sm:w-[70px] sm:text-[14px] w-[40px] text-[12px] sm:h-[25px] h-[20px]">show</Button></Link>
+                    <Link href={`/results/show/${props.data.quizId._id}`} className='m-1'> <Button variant="outline" className="sm:w-[70px] sm:text-[14px] w-[40px] text-[12px] sm:h-[25px] h-[20px]">show</Button></Link>
                 </div>
                 <div>
                     <CircularProgressbar

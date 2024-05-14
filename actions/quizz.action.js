@@ -16,8 +16,6 @@ export async function fetchExamsSchedules(sessionId){
  .populate("quizzes")
  .populate("submittedQuizzes")
  .exec();
-
-  console.log("dataa",data);
    return quizSchedules;
 }
 
@@ -31,7 +29,6 @@ export const getExamData = async (id) => {
             Quizz.findById(id),
             Question.find({quizz:id})
          ]).then((values)=>values)
-         console.log(data)
          return JSON.parse(JSON.stringify(data));
 
     }

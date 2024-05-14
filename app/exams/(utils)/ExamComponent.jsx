@@ -24,11 +24,10 @@ const QuestionOptions = ({ quizcode,questions, activeQuestion }) => {
 
   const handleSubmit=async function(e){
    const res =true
-   //await submitQuizz(quizcode, session?.user?._id);
    if(res){
-      //await submitQuizz(quizcode,session?.user?._id)
-     await setResultForQuizz(session?.user?._id,quizcode)
-     router.replace(`/exams`);
+    const data= await setResultForQuizz(session?.user?._id,quizcode)
+    console.log(data) 
+    router.replace(`/exams`);
     }
   }
     return (

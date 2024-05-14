@@ -45,10 +45,8 @@ const Page = () => {
 
     const fetchData = async (id) => {
       try {
-        console.log(id);
         const dataa = await getAllResultData(id);
         setResultData(dataa);
-        console.log(dataa)
       } catch (error) {
         console.error("Error fetching data:", error);
       }

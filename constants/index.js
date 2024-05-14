@@ -19,3 +19,14 @@ export const roles = [
     { role: 'STUDENT' },
 
 ]
+
+export const answersConstant = {
+    'a': "optionA",
+    'b': "optionB",
+    'c': "optionC",
+    'd': "optionD",
+    'A': "optionA",
+    'B': "optionB",
+    'C': "optionC",
+    'D': "optionD"
+  }

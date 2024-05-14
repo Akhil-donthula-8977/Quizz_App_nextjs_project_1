@@ -17,21 +17,23 @@ export async function setResultForQuizz(userId, quizzCode) {
   try {
     await connectToDB();
     const check =await Result.findOne({ StudentId:userId, quizId:quizzCode })
-    const answers=await SelectedAnswer.find({ studentId:userId })
+    const answers=await SelectedAnswer.find({ studentId:userId, quizzId:quizzCode })
         .select({ questionId: 1, option: 1, quizzId: 1 })
         .populate({
           path: 'questionId',
         }).populate({
           path: 'quizzId',
         }).exec()
+        console.log("answers",answers)
     let res;
     let marks = 0;
+    let totalmarks;
     for (let i in answers) {
-      if (answersConstant[answers[i].questionId.correctoption] == answers[i].option) marks++;
+      //console.log(answersConstant[answers[i].questionId.correctoption] == answers[i].option,answersConstant[answers[i].questionId.correctoption],answers[i].option)
+      if (answersConstant[answers[i].questionId.correctoption] == answers[i].option) marks+=answers[i].questionId.marksForQuestion;
     }
     if (!check) {
-      const totalmarks=answers[0].quizzId.noOfMarks ? answers[0].quizzId.noOfMarks : 10
-      console.log(totalmarks) 
+       totalmarks=answers[0].quizzId.noOfMarks ? answers[0].quizzId.noOfMarks : 10
       res = await Result.create({
         quizId: quizzCode,
         StudentId:userId,
@@ -40,9 +42,11 @@ export async function setResultForQuizz(userId, quizzCode) {
       })
     }
     else {
-      console.log("update entered")
-     res= await Result.findByIdAndUpdate(check._id,{gainedMarks:marks})
+      totalmarks=answers[0].quizzId.noOfMarks ? answers[0].quizzId.noOfMarks : 10
+     res= await Result.findByIdAndUpdate(check._id,{gainedMarks:marks,totalMarks:totalmarks})
     }
+    console.log("totlamarks",totalmarks)
+    console.log("marks",marks)
     revalidatePath("/");
     return JSON.parse(JSON.stringify(res)) ;
   }
@@ -54,7 +58,6 @@ export async function setResultForQuizz(userId, quizzCode) {
 export async function getAllResultData(userId) {
   try {
     await connectToDB();
-    console.log(userId)
     const resultData = await Result.find({ StudentId: userId })
     .populate({
         path: 'quizId',
@@ -67,11 +70,8 @@ export async function getAllResultData(userId) {
     })
     .sort({ 'quizId.deadline': 1 }) // Sort by deadline in ascending order
     .exec();
+   
 
-  
-  console.log(resultData); // Log the populated resultData to inspect the populated fields
-  
-    console.log(resultData)
     return JSON.parse(JSON.stringify(resultData));
 
   }
@@ -80,4 +80,24 @@ export async function getAllResultData(userId) {
   }
 
 
+}
+
+export async function getQuizzResultSummary(userId,quizzCode){
+   try{
+    console.log(userId,quizzCode)
+    const answers=await SelectedAnswer.find({ studentId:userId, quizzId:quizzCode })
+    .select({ questionId: 1, option: 1, quizzId: 1 })
+    .populate({
+      path:'questionId',
+    }).populate({
+      path: 'quizzId',
+    })
+    .exec()
+    console.log("answers",answers)
+    return JSON.parse(JSON.stringify(answers))
+      
+   }
+   catch(e){
+
+   }
 }

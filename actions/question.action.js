@@ -1,37 +1,35 @@
 "use server"
-
 import { SelectedAnswer } from "@/app/(models)/selectedAnswer";
 import { handleError } from "./quizz.action";
 import { connectToDB } from "@/lib/db";
 import { Question } from "@/app/(models)/question";
 import { revalidatePath, revalidateTag } from "next/cache";
 
-export  async function selectOptionForQuestion(quizzId,quesId,option,studentId){
+export  async function selectOptionForQuestion(quizzId,quesId,optionn,studentId){
     try{
       await connectToDB()
-        const ans=await SelectedAnswer.find({quizzId:quizzId,studentId:studentId,questionId:quesId})
+        const ans=await SelectedAnswer.findOne({quizzId:quizzId,studentId:studentId,questionId:quesId})
         let res;
-        console.log(option)
-       if(ans.length>0){
-        res=await SelectedAnswer.updateOne(ans,{option:option});
+       if(ans){
+        res=await SelectedAnswer.updateOne({_id:ans._id},{option:optionn},{new: true}).then(e=>{
+        return SelectedAnswer.findById(ans._id)
+        });
        }
        else{
         res=await SelectedAnswer.create({
             quizzId:quizzId,
             studentId:studentId,
             questionId:quesId,
-            option:option
+            option:optionn
          })
        }
-       console.log(res)
+     
        return JSON.parse(JSON.stringify(res));
     }
     catch(e){
           console.log(e)
     }
 }
-
-
 
 export async function getAllQuestionsOfQuizz(quizCode){
   try{

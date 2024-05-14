@@ -12,9 +12,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 export default async function page({ params }) {
   noStore();
   const session = await getServerSession(options)
-  
   const [data, checkSubmitted] = await Promise.all([getExamData(params.code), studentExamAttempt(params.code, session?.user?._id)])
-  console.log(data)
   if (checkSubmitted?.submittedQuizzes?.length > 0) {
     return (<>
       <p>already submitted</p>

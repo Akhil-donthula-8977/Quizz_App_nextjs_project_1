@@ -18,6 +18,7 @@ const page = async () => {
   if (!session) {
     return redirect("/auth/signIn?callbackUrl=/exams")
   }
+
   if(session?.user?.role=="TEACHER"){
     const data=await getQuizzesByTeacherId(session?.user?._id);
     if(data?.length==0 || !data){
